@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap">
+  <h1>Choose your branch</h1>
+  <p class="lead">Pick the branch you study in. You will see semesters next.</p>
+  <div class="grid grid-courses">
+    <% courses.forEach(c => { %>
+      <a class="card course-tile" href="/course/<%= c.slug %>">
+        <span class="course-icon"><%= c.icon %></span>
+        <span class="course-name"><%= c.name %></span>
+        <span class="course-count"><%= c.product_count %> <%= c.product_count === 1 ? 'file' : 'files' %></span>
+      </a>
+    <% }) %>
+  </div>
+</div></section>
+<%- include('partials/footer') %>

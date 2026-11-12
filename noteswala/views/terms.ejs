@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap prose narrow">
+  <h1>Terms, refunds and privacy</h1>
+  <p class="muted small">Edit this page in <code>views/terms.ejs</code> to match your business. Razorpay asks for these policies when you activate your account.</p>
+  <h2>Using <%= settings.site_name %></h2>
+  <p>All notes and papers are made for your own study. You may not copy, share, upload or resell them. Every PDF carries the buyer's name and email so a leaked copy can be traced. We may block accounts that share files.</p>
+  <h2>Refund and cancellation</h2>
+  <p>Our products are digital files that unlock instantly, so we do not refund after a file has been downloaded. We will refund or replace a file if it is corrupted, empty, or does not match its description. If you were charged twice or paid but did not get access, write to <%= settings.contact_email %> within 7 days with your payment ID. Approved refunds go back to the original payment method within 5 to 7 working days.</p>
+  <h2>Delivery</h2>
+  <p>Files are delivered digitally in My purchases right after payment. Nothing is shipped.</p>
+  <h2>Privacy</h2>
+  <p>We store your name, email, mobile number (if you add it) and purchase history to run your account. Payments are handled by Razorpay. We never see or store your card, UPI or bank details. We do not sell your data. Write to us if you want your account deleted.</p>
+  <h2>Contact</h2>
+  <p>Email <%= settings.contact_email %> or use the <a href="/contact">contact form</a>.</p>
+</div></section>
+<%- include('partials/footer') %>

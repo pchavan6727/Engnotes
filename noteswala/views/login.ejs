@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap auth-wrap">
+  <div class="card auth-card">
+    <% if (mode === 'login') { %>
+      <h1>Welcome back</h1>
+      <p class="muted">Log in to download your notes.</p>
+      <form data-api="/api/auth/login" data-redirect="<%= next %>">
+        <label>Email<input type="email" name="email" autocomplete="email" required></label>
+        <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+        <p class="form-error" role="alert"></p>
+        <button class="btn btn-block" type="submit">Log in</button>
+      </form>
+      <p class="switch">New here? <a href="/register?next=<%= encodeURIComponent(next) %>">Create an account</a></p>
+    <% } else { %>
+      <h1>Create your account</h1>
+      <p class="muted">It takes 20 seconds. You need it to download what you buy.</p>
+      <form data-api="/api/auth/register" data-redirect="<%= next %>">
+        <label>Full name<input type="text" name="name" autocomplete="name" required minlength="2"></label>
+        <label>Email<input type="email" name="email" autocomplete="email" required></label>
+        <label>Mobile number (optional)<input type="tel" name="phone" autocomplete="tel" inputmode="numeric"></label>
+        <label>Password<input type="password" name="password" autocomplete="new-password" minlength="8" required><small>At least 8 characters</small></label>
+        <p class="form-error" role="alert"></p>
+        <button class="btn btn-block" type="submit">Create account</button>
+      </form>
+      <p class="switch">Already have an account? <a href="/login?next=<%= encodeURIComponent(next) %>">Log in</a></p>
+    <% } %>
+  </div>
+</div></section>
+<%- include('partials/footer') %>

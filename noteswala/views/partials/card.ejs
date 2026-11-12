@@ -1,0 +1,22 @@
+<%# params: p (product row) %>
+<article class="card pcard" data-type="<%= p.type %>">
+  <div class="pcard-top">
+    <span class="chip chip-<%= p.type %>"><%= TYPE_SHORT[p.type] %></span>
+    <% if (p.type === 'pyq' && p.exam_year) { %><span class="chip chip-plain"><%= p.exam_session ? p.exam_session + ' ' : '' %><%= p.exam_year %></span><% } %>
+  </div>
+  <h3 class="pcard-title"><a href="/product/<%= p.id %>"><%= p.title %></a></h3>
+  <p class="pcard-meta"><%= p.subject %> · <%= p.course %> Sem <%= p.semester %><% if (p.pages) { %> · <%= p.pages %> pages<% } %></p>
+  <div class="pcard-foot">
+    <% if (p.owned) { %>
+      <span class="owned">You own this</span>
+      <a class="btn btn-sm" href="/download/<%= p.id %>">Download</a>
+    <% } else { %>
+      <span class="price <%= p.price === 0 ? 'price-free' : '' %>"><%= p.price === 0 ? 'Free' : inr(p.price) %></span>
+      <% if (p.price === 0) { %>
+        <a class="btn btn-sm" href="/product/<%= p.id %>">Get free</a>
+      <% } else { %>
+        <button class="btn btn-sm" type="button" data-add="<%= p.id %>">Add to cart</button>
+      <% } %>
+    <% } %>
+  </div>
+</article>

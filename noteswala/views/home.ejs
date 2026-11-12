@@ -1,0 +1,105 @@
+<%- include('partials/header') %>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Notes that actually get you through the exam.</h1>
+      <p class="lead">Clean notes, important questions and solved previous year papers for every BE branch. Pay ₹29 to ₹99, download the PDF straight away.</p>
+      <form class="hero-search" action="/search" role="search">
+        <input type="search" name="q" placeholder="Type a subject, like VLSI or DBMS" aria-label="Search subject" required>
+        <button class="btn" type="submit">Find notes</button>
+      </form>
+      <div class="quick">
+        <span>Pick your branch:</span>
+        <% courses.forEach(c => { %><a class="pill" href="/course/<%= c.slug %>"><%= c.short_code %></a><% }) %>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="sheet sheet-back"></div>
+      <div class="sheet">
+        <div class="sheet-head">VLSI Design · Unit 3</div>
+        <p class="ln">CMOS inverter: working and VTC curve</p>
+        <p class="ln"><mark>Noise margin = VIL − VOL</mark></p>
+        <p class="ln">Latch-up and how to prevent it</p>
+        <p class="ln">Dynamic logic, charge sharing</p>
+        <p class="ln faint">Solved PYQs, May-Jun 2025</p>
+        <span class="sticker s1">₹29</span><span class="sticker s2">₹59</span><span class="sticker s3">₹99</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head"><h2>Choose your branch</h2><a href="/courses">See all</a></div>
+    <div class="grid grid-courses">
+      <% courses.forEach(c => { %>
+        <a class="card course-tile" href="/course/<%= c.slug %>">
+          <span class="course-icon"><%= c.icon %></span>
+          <span class="course-name"><%= c.name %></span>
+          <span class="course-count"><%= c.product_count %> <%= c.product_count === 1 ? 'file' : 'files' %></span>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<% if (latest.length) { %>
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head"><h2>Newly added notes</h2></div>
+    <div class="grid grid-cards"><% latest.forEach(p => { %><%- include('partials/card', {p}) %><% }) %></div>
+  </div>
+</section>
+<% } %>
+
+<% if (latestPyq.length) { %>
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head"><h2>Latest question papers</h2><a href="/pyq">All PYQs</a></div>
+    <div class="grid grid-cards"><% latestPyq.forEach(p => { %><%- include('partials/card', {p}) %><% }) %></div>
+  </div>
+</section>
+<% } %>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head"><h2>How buying works</h2></div>
+    <ol class="steps">
+      <li><strong>Find your subject</strong><span>Branch, then semester, then subject. Or just search.</span></li>
+      <li><strong>Pay with UPI or card</strong><span>Razorpay handles the payment. We never see your card details.</span></li>
+      <li><strong>Download the PDF</strong><span>It unlocks instantly and stays in My purchases.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap two-col">
+    <div>
+      <h2>Why students pick <%= settings.site_name %></h2>
+      <ul class="ticks">
+        <li>Prices start at ₹29, less than a cup of chai and a samosa.</li>
+        <li>PDFs open well on a phone, so you can revise in the bus or train.</li>
+        <li>One purchase gives you <%= settings.max_downloads > 0 ? settings.max_downloads : 'many' %> downloads, in case you change phones.</li>
+        <li>Something wrong with a file? Message us and we fix it.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Questions students ask</h2>
+      <details class="faq"><summary>How soon can I download after paying?</summary><p>Right away. The file unlocks as soon as your payment is confirmed.</p></details>
+      <details class="faq"><summary>I paid but cannot see my file.</summary><p>Open My purchases and refresh. If it is still missing, contact us with your payment ID and we will fix it the same day.</p></details>
+      <details class="faq"><summary>Can I share the PDF with friends?</summary><p>No. Each file carries your name and email on every page, and sharing is against our terms.</p></details>
+      <details class="faq"><summary>Is my payment safe?</summary><p>Yes. Payments run on Razorpay, which supports UPI, cards, net banking and wallets.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap share-cta card">
+    <div>
+      <h2>Know someone preparing for exams?</h2>
+      <p>Share <%= settings.site_name %> with your class group.</p>
+    </div>
+    <button class="btn" type="button" data-share data-title="<%= settings.site_name %>" data-text="Notes and PYQs for BE Engineering from ₹29 on <%= settings.site_name %>:">Share on WhatsApp</button>
+  </div>
+</section>
+<%- include('partials/footer') %>

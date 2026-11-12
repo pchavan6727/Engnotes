@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap">
+  <h1>My purchases</h1>
+  <p class="lead">Hi <%= user.name %>. Your files are below<%= limit > 0 ? '. Each file can be downloaded ' + limit + ' times.' : '.' %></p>
+  <% if (!purchases.length) { %>
+    <div class="empty card"><h3>You have not bought anything yet</h3><p>Pick your branch and find the subject you are studying.</p><a class="btn" href="/courses">Browse notes</a></div>
+  <% } else { %>
+    <div class="list">
+      <% purchases.forEach(p => { const left = limit > 0 ? Math.max(0, limit - p.used) : null; %>
+        <div class="card row">
+          <div class="row-main">
+            <span class="chip chip-<%= p.type %>"><%= TYPE_SHORT[p.type] %></span>
+            <h3><a href="/product/<%= p.id %>"><%= p.title %></a></h3>
+            <p class="pcard-meta"><%= p.subject %> · <%= p.course %> Sem <%= p.semester %> · Bought <%= (p.bought_at || '').slice(0, 10) %></p>
+          </div>
+          <div class="row-side">
+            <% if (left === 0) { %><span class="muted small">Download limit reached</span><a class="btn btn-ghost btn-sm" href="/contact">Ask for more</a>
+            <% } else { %><span class="muted small"><%= left === null ? '' : left + ' downloads left' %></span><a class="btn btn-sm" href="/download/<%= p.id %>">Download</a><% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <% if (orders.length) { %>
+    <h2 class="h-sec">Payment history</h2>
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>Order</th><th>Date</th><th>Amount</th><th>Payment ID</th></tr></thead>
+      <tbody><% orders.forEach(o => { %><tr><td>#NW<%= o.id %></td><td><%= (o.paid_at || '').slice(0, 10) %></td><td><%= inr(o.amount) %></td><td><%= o.razorpay_payment_id || (o.method === 'free' ? 'Free' : o.method) %></td></tr><% }) %></tbody>
+    </table></div>
+  <% } %>
+
+  <h2 class="h-sec">Your details</h2>
+  <div class="two-col">
+    <form class="card form-card" data-api="/api/auth/profile" data-method="PUT" data-toast="Details saved">
+      <label>Name<input name="name" value="<%= user.name %>" required></label>
+      <label>Mobile number<input name="phone" value="<%= user.phone || '' %>" inputmode="numeric"></label>
+      <label>Email<input value="<%= user.email %>" disabled></label>
+      <p class="form-error" role="alert"></p>
+      <button class="btn" type="submit">Save details</button>
+    </form>
+    <form class="card form-card" data-api="/api/auth/password" data-method="PUT" data-toast="Password changed" data-reset>
+      <label>Current password<input type="password" name="current" autocomplete="current-password" required></label>
+      <label>New password<input type="password" name="password" autocomplete="new-password" minlength="8" required></label>
+      <p class="form-error" role="alert"></p>
+      <button class="btn btn-ghost" type="submit">Change password</button>
+    </form>
+  </div>
+</div></section>
+<%- include('partials/footer') %>

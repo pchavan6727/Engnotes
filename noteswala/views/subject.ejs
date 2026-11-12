@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/courses">Branches</a><a href="/course/<%= subject.course_slug %>"><%= subject.course %></a><a href="/course/<%= subject.course_slug %>/sem/<%= subject.semester %>">Semester <%= subject.semester %></a><span><%= subject.name %></span></nav>
+  <h1><%= subject.name %></h1>
+  <p class="lead"><%= subject.course_name %>, semester <%= subject.semester %><%= subject.code ? ' · ' + subject.code : '' %></p>
+
+  <% if (!study.length && !pyqs.length) { %>
+    <div class="empty card"><h3>No files for this subject yet</h3><p>We are adding new material every week. Ask us to add this one next.</p><a class="btn" href="/contact">Request this subject</a></div>
+  <% } %>
+
+  <% if (study.length) { %>
+    <h2 class="h-sec">Notes and important questions</h2>
+    <div class="grid grid-cards"><% study.forEach(p => { %><%- include('partials/card', {p}) %><% }) %></div>
+  <% } %>
+  <% if (pyqs.length) { %>
+    <h2 class="h-sec">Previous year papers</h2>
+    <div class="grid grid-cards"><% pyqs.forEach(p => { %><%- include('partials/card', {p}) %><% }) %></div>
+  <% } %>
+</div></section>
+<%- include('partials/footer') %>

@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap two-col">
+  <div>
+    <h1>Contact us</h1>
+    <p class="lead">Payment problem, missing file, or need notes for a subject we do not have yet? Write to us. We reply within a day.</p>
+    <ul class="ticks">
+      <li>Email: <a href="mailto:<%= settings.contact_email %>"><%= settings.contact_email %></a></li>
+      <% if (settings.whatsapp_number) { %><li>WhatsApp: <a href="https://wa.me/<%= settings.whatsapp_number %>">chat with us</a></li><% } %>
+      <% if (settings.instagram_url) { %><li>Instagram: <a href="<%= settings.instagram_url %>">follow for updates</a></li><% } %>
+    </ul>
+    <p class="muted small">Paid but cannot see your file? Please include your payment ID.</p>
+  </div>
+  <form class="card form-card" data-api="/api/contact" data-toast="Message sent. We will reply soon." data-reset>
+    <label>Your name<input name="name" required value="<%= user ? user.name : '' %>"></label>
+    <label>Email<input type="email" name="email" required value="<%= user ? user.email : '' %>"></label>
+    <label>Subject<input name="subject" placeholder="For example: Need DBMS notes"></label>
+    <label>Message<textarea name="message" rows="5" required></textarea></label>
+    <p class="form-error" role="alert"></p>
+    <button class="btn" type="submit">Send message</button>
+  </form>
+</div></section>
+<%- include('partials/footer') %>

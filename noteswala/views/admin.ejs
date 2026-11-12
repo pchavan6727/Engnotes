@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Admin | Notes Wala</title>
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<% if (!isAdmin) { %>
+  <div class="login-wrap">
+    <form class="login-card" id="adminLogin">
+      <h1>Notes Wala admin</h1>
+      <p class="muted">Log in with your admin email.</p>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+      <label>Password<input type="password" name="password" required autocomplete="current-password"></label>
+      <p class="err" id="loginErr" role="alert"></p>
+      <button class="btn" type="submit">Log in</button>
+    </form>
+  </div>
+<% } else { %>
+  <div class="shell">
+    <aside class="side" id="side">
+      <div class="brand">Notes Wala <small>admin</small></div>
+      <nav id="tabs"></nav>
+      <div class="side-foot"><a href="/" target="_blank" rel="noopener">View website</a><button class="linkish" id="logout" type="button">Log out</button></div>
+    </aside>
+    <div class="main">
+      <header class="top"><button class="burger" id="burger" aria-label="Menu" type="button">Menu</button><h1 id="pageTitle">Dashboard</h1></header>
+      <div id="view" class="view"></div>
+    </div>
+  </div>
+  <div class="modal-bg" id="modalBg" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="modal-head"><h2 id="mTitle"></h2><button class="x" id="mClose" aria-label="Close" type="button">×</button></div><div id="mBody"></div></div></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/js/admin.js"></script>
+<% } %>
+<% if (!isAdmin) { %><script src="/js/admin-login.js"></script><% } %>
+</body>
+</html>

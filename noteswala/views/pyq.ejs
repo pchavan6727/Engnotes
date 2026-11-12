@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap">
+  <h1>Previous year question papers</h1>
+  <p class="lead">Filter by branch, semester and exam year.</p>
+  <form class="filters card" method="get" action="/pyq">
+    <label>Branch
+      <select name="course"><option value="">All branches</option><% courses.forEach(c => { %><option value="<%= c.id %>" <%= f.cid === c.id ? 'selected' : '' %>><%= c.short_code %></option><% }) %></select>
+    </label>
+    <label>Semester
+      <select name="sem"><option value="">All</option><% for (let i = 1; i <= 8; i++) { %><option value="<%= i %>" <%= f.sem === i ? 'selected' : '' %>>Semester <%= i %></option><% } %></select>
+    </label>
+    <label>Exam year
+      <select name="year"><option value="">All years</option><% years.forEach(y => { %><option value="<%= y %>" <%= f.yr === y ? 'selected' : '' %>><%= y %></option><% }) %></select>
+    </label>
+    <button class="btn" type="submit">Show papers</button>
+  </form>
+  <% if (!list.length) { %>
+    <div class="empty card"><h3>No papers match these filters</h3><p>Try a different semester or year, or ask us to add the paper you need.</p><a class="btn btn-ghost" href="/pyq">Clear filters</a></div>
+  <% } else { %>
+    <div class="grid grid-cards"><% list.forEach(p => { %><%- include('partials/card', {p}) %><% }) %></div>
+  <% } %>
+</div></section>
+<%- include('partials/footer') %>

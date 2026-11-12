@@ -1,0 +1,59 @@
+<%
+  const siteName = settings.site_name || 'Notes Wala';
+  const pageTitle = title ? `${title} | ${siteName}` : `${siteName} - ${settings.tagline}`;
+  const pageDesc = desc || settings.tagline;
+%><!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= pageTitle %></title>
+<meta name="description" content="<%= pageDesc %>">
+<meta name="theme-color" content="#2438D8">
+<link rel="canonical" href="<%= canonical %>">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="<%= siteName %>">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDesc %>">
+<meta property="og:url" content="<%= canonical %>">
+<meta property="og:image" content="<%= siteUrl %>/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<% if (demoMode) { %><div class="banner banner-demo">Demo payment mode: purchases here are fake and free. Add your Razorpay keys in the <code>.env</code> file to accept real money.</div><% } %>
+<% if (settings.announcement) { %><div class="banner"><%= settings.announcement %></div><% } %>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="logo" href="/" aria-label="<%= siteName %> home">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="2" width="28" height="30" rx="5" fill="#2438D8"/><rect x="7" y="2" width="2" height="30" fill="#E5484D" opacity=".9"/><path d="M13 11h13M13 17h13M13 23h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect x="12" y="9.5" width="9" height="3.4" rx="1" fill="#FFE55C" opacity=".95"/><path d="M13 11h13" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      <span><%= siteName %></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <form class="nav-search" action="/search" role="search">
+        <input type="search" name="q" placeholder="Search subject or notes" aria-label="Search subject or notes" value="<%= typeof q !== 'undefined' ? q : '' %>">
+      </form>
+      <a href="/courses">Branches</a>
+      <a href="/pyq">PYQs</a>
+      <a href="/contact">Contact</a>
+      <% if (user) { %>
+        <a href="/account">My purchases</a>
+        <% if (user.role === 'admin') { %><a href="/admin">Admin</a><% } %>
+        <button class="link-btn" data-logout type="button">Log out</button>
+      <% } else { %>
+        <a class="btn btn-ghost btn-sm" href="/login">Log in</a>
+      <% } %>
+    </nav>
+    <a class="cart-link" href="/cart" aria-label="Cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 8H6"/></svg>
+      <span class="cart-count" id="cartCount" hidden>0</span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="nav" type="button"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<main id="main">

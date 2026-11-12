@@ -1,0 +1,44 @@
+<%- include('partials/header') %>
+<%
+  const mb = p.file_size ? (p.file_size / 1048576).toFixed(1) + ' MB' : '';
+  const shareText = `${p.title} (${p.course} Sem ${p.semester}) on ${settings.site_name}, ${p.price ? 'only ' + inr(p.price) : 'free'}:`;
+%>
+<section class="section page-top"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/course/<%= p.course_slug %>"><%= p.course %></a><a href="/course/<%= p.course_slug %>/sem/<%= p.semester %>">Semester <%= p.semester %></a><a href="/subject/<%= p.subject_id %>"><%= p.subject %></a></nav>
+  <div class="product-grid">
+    <div>
+      <div class="pcard-top"><span class="chip chip-<%= p.type %>"><%= TYPES[p.type] %></span><% if (p.type === 'pyq' && p.exam_year) { %><span class="chip chip-plain"><%= p.exam_session ? p.exam_session + ' ' : '' %><%= p.exam_year %></span><% } %></div>
+      <h1><%= p.title %></h1>
+      <p class="lead"><%= p.subject %> · <%= p.course_name %> · Semester <%= p.semester %></p>
+      <% if (p.description) { %><div class="prose"><% p.description.split(/\n+/).forEach(line => { %><p><%= line %></p><% }) %></div><% } %>
+      <h2 class="h-sec">What you get</h2>
+      <ul class="ticks">
+        <li>One PDF file<%= p.pages ? ' with ' + p.pages + ' pages' : '' %><%= mb ? ' (' + mb + ')' : '' %></li>
+        <li>Instant download after payment</li>
+        <li>Saved in My purchases, so you can download it again later</li>
+        <li>Works on phone, tablet and laptop</li>
+      </ul>
+    </div>
+    <aside class="buybox card" aria-label="Buy">
+      <% if (p.owned) { %>
+        <div class="buy-price price-free">You own this</div>
+        <a class="btn btn-block" href="/download/<%= p.id %>">Download PDF</a>
+        <a class="btn btn-ghost btn-block" href="/account">Go to My purchases</a>
+      <% } else if (p.price === 0) { %>
+        <div class="buy-price price-free">Free</div>
+        <a class="btn btn-block" href="/login?next=<%= encodeURIComponent('/product/' + p.id) %>">Log in to download</a>
+      <% } else { %>
+        <div class="buy-price"><%= inr(p.price) %></div>
+        <button class="btn btn-block" type="button" data-buy="<%= p.id %>">Buy now</button>
+        <button class="btn btn-ghost btn-block" type="button" data-add="<%= p.id %>">Add to cart</button>
+        <p class="fine">Pay with UPI, card or net banking.</p>
+      <% } %>
+      <button class="link-btn share-btn" type="button" data-share data-title="<%= p.title %>" data-text="<%= shareText %>">Share with friends</button>
+    </aside>
+  </div>
+  <% if (related.length) { %>
+    <h2 class="h-sec">More for <%= p.subject %></h2>
+    <div class="grid grid-cards"><% related.forEach(r => { %><%- include('partials/card', {p: r}) %><% }) %></div>
+  <% } %>
+</div></section>
+<%- include('partials/footer') %>

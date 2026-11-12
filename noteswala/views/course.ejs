@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/courses">Branches</a><span><%= course.short_code %></span></nav>
+  <h1><%= course.icon %> <%= course.name %></h1>
+  <p class="lead">Choose your semester.</p>
+  <div class="grid grid-sems">
+    <% for (let i = 1; i <= 8; i++) { const s = bySem[i]; %>
+      <a class="card sem-tile <%= s ? '' : 'sem-empty' %>" href="/course/<%= course.slug %>/sem/<%= i %>">
+        <span class="sem-num">Sem <%= i %></span>
+        <span class="sem-info"><%= s ? s.subjects + (s.subjects === 1 ? ' subject' : ' subjects') + ' · ' + s.files + (s.files === 1 ? ' file' : ' files') : 'Coming soon' %></span>
+      </a>
+    <% } %>
+  </div>
+  <p class="soft-link"><a href="/pyq?course=<%= course.id %>">View all <%= course.short_code %> question papers</a></p>
+</div></section>
+<%- include('partials/footer') %>

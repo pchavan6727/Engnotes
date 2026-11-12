@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/courses">Branches</a><a href="/course/<%= course.slug %>"><%= course.short_code %></a><span>Semester <%= sem %></span></nav>
+  <h1><%= course.short_code %> · Semester <%= sem %></h1>
+  <div class="sem-switch" role="navigation" aria-label="Semesters">
+    <% for (let i = 1; i <= 8; i++) { %><a class="pill <%= i === sem ? 'pill-on' : '' %>" href="/course/<%= course.slug %>/sem/<%= i %>"><%= i %></a><% } %>
+  </div>
+  <% if (!subjects.length) { %>
+    <div class="empty card"><h3>Notes for this semester are on the way</h3><p>Tell us which subject you need and we will add it first.</p><a class="btn" href="/contact">Request a subject</a></div>
+  <% } else { %>
+  <div class="grid grid-cards">
+    <% subjects.forEach(s => { %>
+      <a class="card subj-tile" href="/subject/<%= s.id %>">
+        <h3><%= s.name %></h3>
+        <p class="pcard-meta"><%= s.code ? s.code + ' · ' : '' %><%= s.files %> <%= s.files === 1 ? 'file' : 'files' %><%= s.pyqs ? ' · ' + s.pyqs + ' PYQs' : '' %></p>
+        <span class="price-from"><%= s.files ? (s.min_price === 0 ? 'Free to start' : 'From ' + inr(s.min_price)) : 'No files yet' %></span>
+      </a>
+    <% }) %>
+  </div>
+  <% } %>
+</div></section>
+<%- include('partials/footer') %>

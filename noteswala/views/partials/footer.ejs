@@ -1,0 +1,32 @@
+</main>
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <strong class="foot-brand"><%= settings.site_name %></strong>
+      <p>Clear, exam-focused notes and solved papers for BE Engineering students. Made by a student, for students.</p>
+    </div>
+    <div>
+      <h4>Browse</h4>
+      <a href="/courses">All branches</a>
+      <a href="/pyq">Question papers</a>
+      <a href="/cart">Cart</a>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <a href="/contact">Contact us</a>
+      <a href="/terms">Terms and refunds</a>
+      <% if (settings.whatsapp_number) { %><a href="https://wa.me/<%= settings.whatsapp_number %>" rel="noopener">WhatsApp support</a><% } %>
+      <% if (settings.instagram_url) { %><a href="<%= settings.instagram_url %>" rel="noopener">Instagram</a><% } %>
+    </div>
+  </div>
+  <div class="wrap foot-end">© <%= new Date().getFullYear() %> <%= settings.site_name %>. Payments are processed securely by Razorpay.</div>
+</footer>
+<% if (settings.whatsapp_number) { %>
+<a class="wa-float" href="https://wa.me/<%= settings.whatsapp_number %>?text=<%= encodeURIComponent('Hi, I need help with ' + settings.site_name) %>" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.500l1.700-5.400A8.500 8.500 0 1 1 21 11.500z"/><path d="M9 9.500c0 3 2.500 5.500 5.500 5.500l1.200-1.500-2-1-.8.800c-.8-.4-1.600-1.200-2-2l.8-.8-1-2z"/></svg>
+</a>
+<% } %>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/js/app.js"></script>
+</body>
+</html>

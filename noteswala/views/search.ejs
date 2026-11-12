@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+<section class="section page-top"><div class="wrap">
+  <h1><%= q ? 'Results for "' + q + '"' : 'Search' %></h1>
+  <form class="hero-search" action="/search" role="search"><input type="search" name="q" value="<%= q %>" placeholder="Type a subject, like VLSI or DBMS" aria-label="Search" required><button class="btn" type="submit">Search</button></form>
+  <% if (q && !list.length && !subjects.length) { %>
+    <div class="empty card"><h3>Nothing found for "<%= q %>"</h3><p>Check the spelling, or tell us what you need and we will add it.</p><a class="btn" href="/contact">Request notes</a></div>
+  <% } %>
+  <% if (subjects.length) { %>
+    <h2 class="h-sec">Subjects</h2>
+    <div class="quick"><% subjects.forEach(s => { %><a class="pill" href="/subject/<%= s.id %>"><%= s.name %> · <%= s.course %> Sem <%= s.semester %></a><% }) %></div>
+  <% } %>
+  <% if (list.length) { %>
+    <h2 class="h-sec">Files</h2>
+    <div class="grid grid-cards"><% list.forEach(p => { %><%- include('partials/card', {p}) %><% }) %></div>
+  <% } %>
+</div></section>
+<%- include('partials/footer') %>
